@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crypto Faucet Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #222;
+      padding: 1em;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    .wallet-input {
+      text-align: center;
+      margin: 1em;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      width: 80%;
+      max-width: 400px;
+      font-size: 1em;
+      border-radius: 6px;
+      border: none;
+    }
+    .faucet-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1em;
+      padding: 1em;
+    }
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: none;
+      background-color: #fff;
+    }
+    .log {
+      background: #222;
+      padding: 1em;
+      margin: 1em;
+      border-radius: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Faucet Dashboard (Dark Mode)
+  </header>
+
+  <div class="wallet-input">
+    <input type="text" id="wallet" placeholder="Enter your crypto wallet address" />
+  </div>
+
+  <div class="faucet-container">
+    <iframe src="https://freebitco.in"></iframe>
+    <iframe src="https://autofaucet.dutchycorp.space"></iframe>
+    <iframe src="https://claimfreecoins.io"></iframe>
+  </div>
+
+  <div class="log" id="log">
+    <strong>Claim History:</strong>
+    <ul id="claim-list"></ul>
+  </div>
+
+  <script>
+    const walletInput = document.getElementById('wallet');
+    const claimList = document.getElementById('claim-list');
+
+    walletInput.addEventListener('change', () => {
+      const address = walletInput.value;
+      const item = document.createElement('li');
+      const now = new Date().toLocaleString();
+      item.textContent = `Set wallet: ${address} at ${now}`;
+      claimList.appendChild(item);
+      localStorage.setItem('wallet', address);
+    });
+
+    window.onload = () => {
+      const saved = localStorage.getItem('wallet');
+      if (saved) {
+        walletInput.value = saved;
+        const item = document.createElement('li');
+        item.textContent = `Loaded saved wallet: ${saved}`;
+        claimList.appendChild(item);
+      }
+    };
+  </script>
+</body>
+</html>
